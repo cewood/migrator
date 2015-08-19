@@ -197,7 +197,7 @@ docker_login() {
 
 # decode username/password for a registry to query the API
 decode_auth() {
-  AUTH_CREDS="$(cat ~/.dockercfg | jq -r '."'${1}'".auth' | base64 --decode)"
+  AUTH_CREDS="$(cat ~/.dockercfg | jq -r '.["'${1}'"]["auth"]' | base64 --decode)"
 }
 
 # query the v1 registry for a list of all images
