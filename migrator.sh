@@ -2,6 +2,13 @@
 
 set -e
 
+enable_debugging() {
+  if [ -n "${MIGRATOR_VERBOSE}" ]
+  then
+    set -x
+  fi
+}
+
 # initialization
 initialize_migrator() {
   # sets colors for use in output
@@ -366,6 +373,7 @@ migration_complete() {
 
 # main function
 main() {
+  enable_debugging
   initialize_migrator
   verify_ready
   docker_login ${V1_REGISTRY} ${V1_USERNAME} ${V1_PASSWORD} ${V1_EMAIL}
