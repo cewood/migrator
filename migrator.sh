@@ -221,6 +221,11 @@ query_v1_images() {
     # loop through tags to create list of full image names w/tags
     for j in ${IMAGE_TAGS}
     do
+      if [[ $j == "error" ]]
+      then
+        # skip this error tag/entry
+        continue
+      fi
       # check if an image is a 'library' image without a namespace
       if [ ${i:0:8} = "library/" ]
       then
