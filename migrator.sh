@@ -203,13 +203,13 @@ decode_auth() {
 # query the v1 registry for a list of all images
 query_v1_images() {
   echo -e "\n${INFO} Getting a list of images from ${V1_REGISTRY}"
-  IMAGE_LIST="$(curl -s https://${AUTH_CREDS}@${V1_REGISTRY}/v1/search?q= | jq -r '.results | .[] | .name')"
+  IMAGE_LIST="$(curl --user ${AUTH_CREDS} -s https://${V1_REGISTRY}/v1/search?q= | jq -r '.results | .[] | .name')"
 
   # loop through all images in v1 registry to get tags for each
   for i in ${IMAGE_LIST}
   do
     # get list of tags for image i
-    IMAGE_TAGS=$(curl -s https://${AUTH_CREDS}@${V1_REGISTRY}/v1/repositories/${i}/tags | jq -r 'keys | .[]')
+    IMAGE_TAGS=$(curl --user ${AUTH_CREDS} -s https://${V1_REGISTRY}/v1/repositories/${i}/tags | jq -r 'keys | .[]')
 
     # loop through tags to create list of full image names w/tags
     for j in ${IMAGE_TAGS}
